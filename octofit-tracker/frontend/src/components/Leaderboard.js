@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { buildApiUrl } from '../utils/api';
+import { fetchAllPages } from '../utils/api';
 
 function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -9,20 +9,8 @@ function Leaderboard() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const url = buildApiUrl('leaderboard');
-        console.log('Fetching Leaderboard from:', url);
-        
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Leaderboard request failed with status ${response.status}`);
-        }
-        const data = await response.json();
-        
-        console.log('Leaderboard response:', data);
-        
-        // Handle both paginated and plain array responses
-        const leaderboardList = data.results || data;
-        const sortedList = (Array.isArray(leaderboardList) ? leaderboardList : [])
+        const leaderboardList = await fetchAllPages('leaderboard');
+        const sortedList = leaderboardList
           .sort((a, b) => (b.points || 0) - (a.points || 0));
         setLeaderboard(sortedList);
         setLoading(false);

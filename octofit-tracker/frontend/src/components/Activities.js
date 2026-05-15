@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { buildApiUrl } from '../utils/api';
+import { fetchAllPages } from '../utils/api';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -9,20 +9,8 @@ function Activities() {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const url = buildApiUrl('activities');
-        console.log('Fetching Activities from:', url);
-        
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Activities request failed with status ${response.status}`);
-        }
-        const data = await response.json();
-        
-        console.log('Activities response:', data);
-        
-        // Handle both paginated and plain array responses
-        const activitiesList = data.results || data;
-        setActivities(Array.isArray(activitiesList) ? activitiesList : []);
+        const activitiesList = await fetchAllPages('activities');
+        setActivities(activitiesList);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching activities:', err);

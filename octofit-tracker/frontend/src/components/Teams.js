@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { buildApiUrl } from '../utils/api';
+import { fetchAllPages } from '../utils/api';
 
 function Teams() {
   const [teams, setTeams] = useState([]);
@@ -9,20 +9,8 @@ function Teams() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const url = buildApiUrl('teams');
-        console.log('Fetching Teams from:', url);
-        
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Teams request failed with status ${response.status}`);
-        }
-        const data = await response.json();
-        
-        console.log('Teams response:', data);
-        
-        // Handle both paginated and plain array responses
-        const teamsList = data.results || data;
-        setTeams(Array.isArray(teamsList) ? teamsList : []);
+        const teamsList = await fetchAllPages('teams');
+        setTeams(teamsList);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching teams:', err);

@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 	_id = ObjectIdField(read_only=True)
 	class Meta:
 		model = User
-		fields = ['_id', 'name', 'team']
+		fields = ['_id', 'name', 'email', 'team']
 
 class TeamSerializer(serializers.ModelSerializer):
 	_id = ObjectIdField(read_only=True)
@@ -22,12 +22,14 @@ class TeamSerializer(serializers.ModelSerializer):
 
 class ActivitySerializer(serializers.ModelSerializer):
 	_id = ObjectIdField(read_only=True)
+	user = serializers.CharField(source='user.name', read_only=True)
 	class Meta:
 		model = Activity
 		fields = ['_id', 'user', 'activity', 'duration']
 
 class LeaderboardSerializer(serializers.ModelSerializer):
 	_id = ObjectIdField(read_only=True)
+	user = serializers.CharField(source='user.name', read_only=True)
 	class Meta:
 		model = Leaderboard
 		fields = ['_id', 'user', 'points']
