@@ -27,6 +27,6 @@ router.register(r'workouts', views.WorkoutViewSet, basename='workout')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', views.api_root, name='api-root'),
+    path('api/', views.ApiRootView.as_view(), name='api-root'),
     path('api/', include(router.urls)),
 ]
