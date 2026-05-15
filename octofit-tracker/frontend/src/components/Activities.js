@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { buildApiUrl } from '../utils/api';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -8,10 +9,13 @@ function Activities() {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const url = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/activities/`;
+        const url = buildApiUrl('activities');
         console.log('Fetching Activities from:', url);
         
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Activities request failed with status ${response.status}`);
+        }
         const data = await response.json();
         
         console.log('Activities response:', data);

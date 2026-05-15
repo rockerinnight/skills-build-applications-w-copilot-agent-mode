@@ -11,7 +11,7 @@ class User(models.Model):
 class Team(models.Model):
 	_id = models.ObjectIdField(primary_key=True, editable=False)
 	name = models.CharField(max_length=100)
-	members = models.ArrayField(model_container=User, blank=True)
+	members = models.JSONField(default=list, blank=True)
 	def __str__(self):
 		return self.name
 

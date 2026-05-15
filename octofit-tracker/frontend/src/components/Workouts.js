@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { buildApiUrl } from '../utils/api';
 
 function Workouts() {
   const [workouts, setWorkouts] = useState([]);
@@ -8,10 +9,13 @@ function Workouts() {
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const url = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`;
+        const url = buildApiUrl('workouts');
         console.log('Fetching Workouts from:', url);
         
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Workouts request failed with status ${response.status}`);
+        }
         const data = await response.json();
         
         console.log('Workouts response:', data);

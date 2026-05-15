@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { buildApiUrl } from '../utils/api';
 
 function Teams() {
   const [teams, setTeams] = useState([]);
@@ -8,10 +9,13 @@ function Teams() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const url = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/teams/`;
+        const url = buildApiUrl('teams');
         console.log('Fetching Teams from:', url);
         
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Teams request failed with status ${response.status}`);
+        }
         const data = await response.json();
         
         console.log('Teams response:', data);

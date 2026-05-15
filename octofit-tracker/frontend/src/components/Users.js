@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { buildApiUrl } from '../utils/api';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -8,10 +9,13 @@ function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const url = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/users/`;
+        const url = buildApiUrl('users');
         console.log('Fetching Users from:', url);
         
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Users request failed with status ${response.status}`);
+        }
         const data = await response.json();
         
         console.log('Users response:', data);
@@ -58,7 +62,7 @@ function Users() {
                   {users.map((user, index) => (
                     <tr key={user._id || index}>
                       <td><strong>{user.name}</strong></td>
-                      <td>{user.email}</td>
+                      <td>{user.email || 'Private'}</td>
                       <td><span className="badge bg-info">{user.team}</span></td>
                     </tr>
                   ))}

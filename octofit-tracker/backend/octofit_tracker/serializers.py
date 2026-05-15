@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 	_id = ObjectIdField(read_only=True)
 	class Meta:
 		model = User
-		fields = ['_id', 'name', 'email', 'team']
+		fields = ['_id', 'name', 'team']
 
 class TeamSerializer(serializers.ModelSerializer):
 	_id = ObjectIdField(read_only=True)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Activities from './components/Activities';
@@ -8,6 +8,10 @@ import Leaderboard from './components/Leaderboard';
 import Workouts from './components/Workouts';
 
 function App() {
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const closeNav = () => setIsNavOpen(false);
+
   return (
     <Router>
       <div>
@@ -19,43 +23,42 @@ function App() {
             <button
               className="navbar-toggler"
               type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
+              onClick={() => setIsNavOpen(!isNavOpen)}
               aria-controls="navbarNav"
-              aria-expanded="false"
+              aria-expanded={isNavOpen}
               aria-label="Toggle navigation"
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
+            <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`} id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/">
+                  <Link className="nav-link" to="/" onClick={closeNav}>
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/users">
+                  <Link className="nav-link" to="/users" onClick={closeNav}>
                     Users
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/teams">
+                  <Link className="nav-link" to="/teams" onClick={closeNav}>
                     Teams
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/activities">
+                  <Link className="nav-link" to="/activities" onClick={closeNav}>
                     Activities
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/leaderboard">
+                  <Link className="nav-link" to="/leaderboard" onClick={closeNav}>
                     Leaderboard
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/workouts">
+                  <Link className="nav-link" to="/workouts" onClick={closeNav}>
                     Workouts
                   </Link>
                 </li>
@@ -80,7 +83,7 @@ function App() {
 }
 
 function Home() {
-  console.log('Octofit Tracker App loaded. API calls proxied through port 3000 → localhost:8000');
+  console.log('Octofit Tracker App loaded. API calls resolve through Codespaces URL when configured, otherwise /api proxy.');
 
   return (
     <div className="jumbotron">
@@ -93,7 +96,7 @@ function Home() {
         Use the navigation menu above to explore users, teams, activities, leaderboard, and suggested workouts.
       </p>
       <p className="text-muted">
-        <small>Backend API: /api/ (proxied to localhost:8000)</small>
+        <small>Backend API: Codespaces URL or /api/ proxy</small>
       </p>
     </div>
   );
