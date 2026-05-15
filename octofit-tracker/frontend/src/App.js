@@ -80,11 +80,7 @@ function App() {
 }
 
 function Home() {
-  const codespaceUrl = process.env.REACT_APP_CODESPACE_NAME 
-    ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev`
-    : 'http://localhost:8000';
-  
-  console.log('Octofit Tracker App loaded. Backend API URL:', codespaceUrl);
+  console.log('Octofit Tracker App loaded. API calls proxied through port 3000 → localhost:8000');
 
   return (
     <div className="jumbotron">
@@ -97,7 +93,7 @@ function Home() {
         Use the navigation menu above to explore users, teams, activities, leaderboard, and suggested workouts.
       </p>
       <p className="text-muted">
-        <small>Backend API: {codespaceUrl}</small>
+        <small>Backend API: /api/ (proxied to localhost:8000)</small>
       </p>
     </div>
   );
