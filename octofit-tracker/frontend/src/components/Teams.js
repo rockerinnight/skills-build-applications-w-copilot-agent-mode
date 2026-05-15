@@ -8,7 +8,7 @@ function Teams() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const url = '/api/teams/';
+        const url = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/teams/`;
         console.log('Fetching Teams from:', url);
         
         const response = await fetch(url);

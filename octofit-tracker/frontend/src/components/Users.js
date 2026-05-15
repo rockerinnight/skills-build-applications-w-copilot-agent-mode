@@ -8,7 +8,7 @@ function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const url = '/api/users/';
+        const url = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/users/`;
         console.log('Fetching Users from:', url);
         
         const response = await fetch(url);

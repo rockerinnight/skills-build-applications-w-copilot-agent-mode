@@ -8,7 +8,7 @@ function Leaderboard() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const url = '/api/leaderboard/';
+        const url = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`;
         console.log('Fetching Leaderboard from:', url);
         
         const response = await fetch(url);
